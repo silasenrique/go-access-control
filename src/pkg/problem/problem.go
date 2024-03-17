@@ -2,7 +2,6 @@ package problem
 
 import (
 	"encoding/json"
-	"errors"
 
 	"github.com/go-playground/validator/v10"
 )
@@ -12,6 +11,7 @@ type Problem struct {
 	Title    string `json:"title"`
 	Detail   string `json:"detail"`
 	Instance string `json:"instance"`
+	Err      string `json:"error"`
 
 	Errors []ProblemDetail `json:"errors"`
 }
@@ -25,11 +25,7 @@ func (p Problem) Error() string {
 }
 
 func (p *Problem) AddValidationDetails(err error) *Problem {
-	var (
-		ve validator.ValidationErrors
-	)
-
-	if errors.As(err, &ve) {
+	if IsValidationProblem(err) {
 		for _, err := range err.(validator.ValidationErrors) {
 			p.Errors = append(p.Errors, *NewProblemDetailForValidationError(err))
 		}
@@ -38,11 +34,21 @@ func (p *Problem) AddValidationDetails(err error) *Problem {
 	return p
 }
 
-func NewProblem(problemType, title, detail, instance string) *Problem {
+func NewProblem(problemType ProblemType, title, detail, instance string) *Problem {
 	return &Problem{
-		Type:     problemType,
+		Type:     problemType.ToString(),
 		Title:    title,
 		Detail:   detail,
 		Instance: instance,
+	}
+}
+
+func NewProblemError(problemType ProblemType, title, detail, instance, err string) *Problem {
+	return &Problem{
+		Type:     problemType.ToString(),
+		Title:    title,
+		Detail:   detail,
+		Instance: instance,
+		Err:      err,
 	}
 }

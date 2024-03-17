@@ -2,11 +2,10 @@ package services
 
 import (
 	"database/sql"
-	"errors"
 	"go-access-control/src/internal/api/dto"
-	"go-access-control/src/internal/helper"
 	"go-access-control/src/internal/model"
 	"go-access-control/src/internal/repository"
+	"go-access-control/src/pkg/problem"
 )
 
 type CompanyService struct {
@@ -33,11 +32,11 @@ func (c *CompanyService) Create(req *dto.CompanyCreateRequest) (*dto.CompanyResp
 	}
 
 	if findByCode != nil {
-		return nil, helper.NewBussinessError(
-			findByCode,
-			false,
-			50001,
-			errors.New("o código já está senkdo utilizado por outra entidade"),
+		return nil, problem.NewProblem(
+			problem.Business,
+			problem.CodeExistis,
+			problem.CodeExistsDetails,
+			"https://github.com/silasenrique/api-heper",
 		)
 	}
 
