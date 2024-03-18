@@ -13,6 +13,10 @@ var typeErr = map[string]string{
 }
 
 func getErr(tag string) string {
+	if typeErr[tag] == "" {
+		return tag
+	}
+
 	return typeErr[tag]
 }
 

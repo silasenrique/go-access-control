@@ -6,5 +6,9 @@ var instanceUrl = map[string]string{
 }
 
 func getInstanceUrl(instance string) string {
+	if instanceUrl[instance] == "" {
+		return instance
+	}
+
 	return instanceUrl[instance]
 }

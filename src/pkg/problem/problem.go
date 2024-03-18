@@ -7,13 +7,12 @@ import (
 )
 
 type Problem struct {
-	Type     string `json:"type"`
-	Title    string `json:"title"`
-	Detail   string `json:"detail"`
-	Instance string `json:"instance"`
-	Err      string `json:"error"`
-
-	Errors []ProblemDetail `json:"errors"`
+	Type     string          `json:"type"`
+	Title    string          `json:"title"`
+	Detail   string          `json:"detail"`
+	Instance string          `json:"instance"`
+	Err      string          `json:"error,omitempty"`
+	Errors   []ProblemDetail `json:"errors,omitempty"`
 }
 
 func (p Problem) ToHttpError() ([]byte, error) {
@@ -27,7 +26,7 @@ func (p Problem) Error() string {
 func (p *Problem) AddValidationDetails(err error) *Problem {
 	if IsValidationProblem(err) {
 		for _, err := range err.(validator.ValidationErrors) {
-			p.Errors = append(p.Errors, *NewProblemDetailForValidationError(err))
+			p.Errors = append(p.Errors, NewProblemDetailForValidationError(err))
 		}
 	}
 

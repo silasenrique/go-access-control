@@ -1,8 +1,8 @@
 CREATE TABLE COMPANY (
-  Id             serial primary key,
-	Code           varchar(10) unique not null,
-	Name           varchar(100),
-	SiteUrl        varchar(200),
-	CreationDate   date,
-	LastChangeDate date
+  ID               SERIAL PRIMARY KEY,
+	CODE             VARCHAR(10) UNIQUE NOT NULL,
+	NAME             VARCHAR(100),
+	SITE_URL         VARCHAR(200),
+	CREATION_DATE    INTEGER,
+	LAST_CHANGE_DATE INTEGER
 );

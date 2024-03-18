@@ -6,5 +6,10 @@ var validationErrorTitle = map[string]string{
 }
 
 func getValidationErrorTitle(errType string) string {
-	return validationErrorTitle[errType]
+	mess := validationErrorTitle[errType]
+	if mess != "" {
+		return mess
+	}
+
+	return errType
 }

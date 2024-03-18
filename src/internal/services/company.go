@@ -6,6 +6,7 @@ import (
 	"go-access-control/src/internal/model"
 	"go-access-control/src/internal/repository"
 	"go-access-control/src/pkg/problem"
+	"time"
 )
 
 type CompanyService struct {
@@ -31,7 +32,7 @@ func (c *CompanyService) Create(req *dto.CompanyCreateRequest) (*dto.CompanyResp
 		return nil, err
 	}
 
-	if findByCode != nil {
+	if findByCode.Code != "" {
 		return nil, problem.NewProblem(
 			problem.Business,
 			problem.CodeExistis,
@@ -55,8 +56,8 @@ func (c *CompanyService) Create(req *dto.CompanyCreateRequest) (*dto.CompanyResp
 		Code:           findByCode.Code,
 		Name:           findByCode.Name,
 		SiteUrl:        findByCode.SiteUrl,
-		CreationDate:   findByCode.CreationDate,
-		LastChangeDate: findByCode.LastChangeDate,
+		CreationDate:   time.Unix(findByCode.CreationDate, 0).String(),
+		LastChangeDate: time.Unix(findByCode.LastChangeDate, 0).String(),
 	}, nil
 
 }
