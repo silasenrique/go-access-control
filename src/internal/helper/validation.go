@@ -18,7 +18,7 @@ func NewProblemValidation(err error) *problem.Problem {
 			Validation,
 			ValidationProblemTitle,
 			ValidationProblemDetail,
-			"https://github.com/silasenrique/api-heper",
+			"https://github.com/silasenrique/go-access-control/wiki/Error-Index#estrutura-com-dados-inv%C3%A1lidos",
 		),
 		validationError: err,
 	}
