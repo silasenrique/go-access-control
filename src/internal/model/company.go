@@ -37,9 +37,9 @@ func (c *Company) Validate() error {
 
 		return problem.NewProblem(
 			helper.Internal,
-			helper.InternalProblemTitle,
-			helper.CodeExistsDetails,
-			"https://github.com/silasenrique/api-heper",
+			helper.ValidationInternalProblemTitle,
+			helper.ValidationInternalProblemDetail,
+			"https://github.com/silasenrique/go-access-control/wiki/Error-Index#n%C3%A3o-foi-poss%C3%ADvel-realizar-a-valida%C3%A7%C3%A3o-da-estrutura",
 		)
 	}
 

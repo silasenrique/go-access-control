@@ -38,7 +38,7 @@ func (c *CompanyRepository) FindByCode(code string) (*model.Company, error) {
 			helper.Internal,
 			helper.SQLNotFoundProblemTitle,
 			helper.SQLNotFoundProblemDetail,
-			"https://github.com/silasenrique/api-heper",
+			"https://github.com/silasenrique/go-access-control/wiki/Error-Index#n%C3%A3o-foi-poss%C3%ADvel-recuperar-um-recurso",
 			err.Error(),
 		)
 	}
@@ -62,7 +62,7 @@ func (c *CompanyRepository) Create(company *model.Company) error {
 			helper.Internal,
 			helper.SQLCreateProblemTitle,
 			helper.SQLCreateProblemDetail,
-			"https://github.com/silasenrique/api-heper",
+			"https://github.com/silasenrique/go-access-control/wiki/Error-Index#n%C3%A3o-foi-poss%C3%ADvel-cadastrar-um-recurso",
 			err.Error(),
 		)
 	}

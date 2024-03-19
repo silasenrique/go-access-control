@@ -38,7 +38,7 @@ func (c *CompanyService) Create(req *dto.CompanyCreateRequest) (*dto.CompanyResp
 			helper.Business,
 			helper.AlreadyExistsProblemTitle,
 			helper.CodeExistsDetails,
-			"https://github.com/silasenrique/api-heper",
+			"https://github.com/silasenrique/go-access-control/wiki/Error-Index#houve-uma-tentativa-de-reutilizar-um-dado-%C3%BAnico",
 		)
 	}
 
