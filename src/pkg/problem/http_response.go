@@ -9,6 +9,6 @@ func ProblemHttpResponse(w http.ResponseWriter, err error) {
 	w.Header().Set("Content-Type", "application/problem+json")
 	w.WriteHeader(http.StatusBadRequest)
 
-	abc := err.(*Problem)
-	json.NewEncoder(w).Encode(&abc)
+	problem := err.(*Problem)
+	json.NewEncoder(w).Encode(&problem)
 }

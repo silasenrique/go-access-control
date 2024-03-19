@@ -1,6 +1,7 @@
 package model
 
 import (
+	"go-access-control/src/internal/helper"
 	"go-access-control/src/pkg/problem"
 
 	"time"
@@ -30,19 +31,14 @@ func NewCompany(code, name, url string) *Company {
 func (c *Company) Validate() error {
 	err := validator.New().Struct(c)
 	if err != nil {
-		if problem.IsValidationProblem(err) {
-			return problem.NewProblem(
-				problem.Validation,
-				problem.ValidationTitle,
-				problem.ValidationDetail,
-				"https://github.com/silasenrique/api-heper",
-			).AddValidationDetails(err)
+		if helper.IsValidationProblem(err) {
+			return helper.NewProblemValidation(err)
 		}
 
 		return problem.NewProblem(
-			problem.Internal,
-			problem.InternalValidationErrorTitle,
-			problem.InternalValidationErrorDetail,
+			helper.Internal,
+			helper.InternalProblemTitle,
+			helper.CodeExistsDetails,
 			"https://github.com/silasenrique/api-heper",
 		)
 	}

@@ -3,6 +3,7 @@ package services
 import (
 	"database/sql"
 	"go-access-control/src/internal/api/dto"
+	"go-access-control/src/internal/helper"
 	"go-access-control/src/internal/model"
 	"go-access-control/src/internal/repository"
 	"go-access-control/src/pkg/problem"
@@ -32,11 +33,11 @@ func (c *CompanyService) Create(req *dto.CompanyCreateRequest) (*dto.CompanyResp
 		return nil, err
 	}
 
-	if findByCode.Code != "" {
+	if findByCode != nil {
 		return nil, problem.NewProblem(
-			problem.Business,
-			problem.CodeExistis,
-			problem.CodeExistsDetails,
+			helper.Business,
+			helper.AlreadyExistsProblemTitle,
+			helper.CodeExistsDetails,
 			"https://github.com/silasenrique/api-heper",
 		)
 	}
