@@ -1,4 +1,4 @@
-package problem
+package helper
 
 import (
 	"encoding/json"
@@ -6,9 +6,9 @@ import (
 )
 
 func ProblemHttpResponse(w http.ResponseWriter, err error) {
-	w.Header().Set("Content-Type", "application/problem+json")
-	w.WriteHeader(http.StatusBadRequest)
+	problem := getError(err)
 
-	problem := err.(*Problem)
+	w.Header().Set("Content-Type", "application/problem+json")
+	w.WriteHeader(problem.StatusCode)
 	json.NewEncoder(w).Encode(&problem)
 }

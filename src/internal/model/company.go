@@ -2,7 +2,6 @@ package model
 
 import (
 	"go-access-control/src/internal/helper"
-	"go-access-control/src/pkg/problem"
 
 	"time"
 
@@ -32,15 +31,10 @@ func (c *Company) Validate() error {
 	err := validator.New().Struct(c)
 	if err != nil {
 		if helper.IsValidationProblem(err) {
-			return helper.NewProblemValidation(err)
+			return helper.NewHelper(helper.ErrValidationStruct).AddIntenal(err)
 		}
 
-		return problem.NewProblem(
-			helper.Internal,
-			helper.ValidationInternalProblemTitle,
-			helper.ValidationInternalProblemDetail,
-			"https://github.com/silasenrique/go-access-control/wiki/Error-Index#n%C3%A3o-foi-poss%C3%ADvel-realizar-a-valida%C3%A7%C3%A3o-da-estrutura",
-		)
+		return helper.NewHelper(helper.ErrInternalValidationStruct).AddIntenal(err)
 	}
 
 	return nil

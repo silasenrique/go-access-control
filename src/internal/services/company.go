@@ -6,7 +6,6 @@ import (
 	"go-access-control/src/internal/helper"
 	"go-access-control/src/internal/model"
 	"go-access-control/src/internal/repository"
-	"go-access-control/src/pkg/problem"
 	"time"
 )
 
@@ -34,12 +33,7 @@ func (c *CompanyService) Create(req *dto.CompanyCreateRequest) (*dto.CompanyResp
 	}
 
 	if findByCode != nil {
-		return nil, problem.NewProblem(
-			helper.Business,
-			helper.AlreadyExistsProblemTitle,
-			helper.CodeExistsDetails,
-			"https://github.com/silasenrique/go-access-control/wiki/Error-Index#houve-uma-tentativa-de-reutilizar-um-dado-%C3%BAnico",
-		)
+		return nil, helper.NewHelper(helper.ErrCodeAlreadyExists).AddIntenal(err)
 	}
 
 	createErr := c.rep.Create(company)

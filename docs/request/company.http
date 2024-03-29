@@ -4,7 +4,7 @@ POST {{host}}/company/create HTTP/1.1
 Accept: application/json
 
 {
-  "code": "dallqlwa",
+  "code": "aaaaaaal",
   "name": "Cruzeiro do Sul",
   "siteUrl": "https://www.youtube.com/live/MspA7YUeDnw?si=MGdYvLr08vpXk8PS"
 }
