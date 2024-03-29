@@ -1,15 +1,9 @@
 package helper
 
-type ProblemDetail string
-
 const (
-	ValidationProblemDetail         ProblemDetail = "A entidade que está sendo cadastrada não possui todos os dados corretos"
-	ValidationInternalProblemDetail ProblemDetail = "Não foi possível realizar a validação dos dados a serem cadastrados"
-	CodeExistsDetails               ProblemDetail = "O código informado já foi utilizado anteriormente"
-	SQLNotFoundProblemDetail        ProblemDetail = "Houve um erro interno e não foi possível recuperar um recurso"
-	SQLCreateProblemDetail          ProblemDetail = "Houve um erro interno e não foi possível cadastrar um recurso"
+	ValidationProblemDetail         string = "A entidade que está sendo cadastrada não possui todos os dados corretos"
+	ValidationInternalProblemDetail string = "Não foi possível realizar a validação dos dados a serem cadastrados"
+	CodeExistsDetails               string = "O código informado já foi utilizado anteriormente"
+	SQLNotFoundProblemDetail        string = "Houve um erro interno e não foi possível recuperar um recurso"
+	SQLCreateProblemDetail          string = "Houve um erro interno e não foi possível cadastrar um recurso"
 )
-
-func (p ProblemDetail) String() string {
-	return string(p)
-}

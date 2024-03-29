@@ -1,40 +1,41 @@
 package helper
 
 import (
-	"errors"
 	"go-access-control/src/pkg/problem"
+	"net/http"
 
 	"github.com/go-playground/validator/v10"
 )
 
-type ProblemValidation struct {
+type problemValidation struct {
 	problem         *problem.Problem
 	validationError error
 }
 
-func NewProblemValidation(err error) *problem.Problem {
-	problem := &ProblemValidation{
+func newProblemValidation(err error) *problem.Problem {
+	problem := &problemValidation{
 		problem: problem.NewProblem(
 			Validation,
-			ValidationProblemTitle,
+			ErrValidationStruct.Error(),
 			ValidationProblemDetail,
-			"https://github.com/silasenrique/go-access-control/wiki/Error-Index#estrutura-com-dados-inv%C3%A1lidos",
+			urlHelpers[ErrValidationStruct],
+			http.StatusInternalServerError,
 		),
 		validationError: err,
 	}
-
-	problem.AddValidationDetails()
+	problem.problem.SetStatusCode(http.StatusBadRequest)
+	problem.addValidationDetails()
 
 	return problem.problem
 }
 
-func (p *ProblemValidation) AddValidationDetails() {
+func (p *problemValidation) addValidationDetails() {
 	for _, err := range p.validationError.(validator.ValidationErrors) {
 		detail := problem.NewProblemDetail(
 			err.Namespace(),
-			getValidationErrorTitle(err.Tag()),
-			getErr(err.Tag()),
-			getInstanceUrl(err.Tag()),
+			err.Tag(),
+			err.Tag(),
+			err.Tag(),
 			err.Error(),
 		)
 
@@ -43,46 +44,6 @@ func (p *ProblemValidation) AddValidationDetails() {
 }
 
 func IsValidationProblem(err error) bool {
-	return errors.Is(err, validator.ValidationErrors{})
-}
-
-var validationErrorTitle = map[string]string{
-	"required": "Atributo obrigatório não informado",
-	"gte":      "Atributo não atingiu a quantidade minima requerida",
-}
-
-func getValidationErrorTitle(errType string) string {
-	mess := validationErrorTitle[errType]
-	if mess != "" {
-		return mess
-	}
-
-	return errType
-}
-
-var instanceUrl = map[string]string{
-	"required": "https://github.com/silasenrique/api-heper/required",
-	"gte":      "https://github.com/silasenrique/api-heper/gte",
-}
-
-func getInstanceUrl(instance string) string {
-	if instanceUrl[instance] == "" {
-		return instance
-	}
-
-	return instanceUrl[instance]
-}
-
-var typeErr = map[string]string{
-	"gte":      "O atributo não atingiu a quantidade minima de caracteres esperado",
-	"lte":      "O atributo ultrapassou a quantidade de caracteres esperado",
-	"required": "Um atributo obrigatório não foi informado",
-}
-
-func getErr(tag string) string {
-	if typeErr[tag] == "" {
-		return tag
-	}
-
-	return typeErr[tag]
+	_, isType := err.(validator.ValidationErrors)
+	return isType
 }

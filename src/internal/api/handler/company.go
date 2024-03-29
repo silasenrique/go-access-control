@@ -6,7 +6,6 @@ import (
 	"go-access-control/src/internal/api/dto"
 	"go-access-control/src/internal/helper"
 	"go-access-control/src/internal/services"
-	"go-access-control/src/pkg/problem"
 	"net/http"
 )
 
@@ -16,7 +15,7 @@ func CompanyCreateHandler(db *sql.DB) http.HandlerFunc {
 
 		err := json.NewDecoder(r.Body).Decode(company)
 		if err != nil {
-			problem.ProblemHttpResponse(w, err)
+			helper.ProblemHttpResponse(w, err)
 			return
 		}
 

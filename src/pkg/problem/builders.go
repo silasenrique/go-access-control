@@ -1,21 +1,12 @@
 package problem
 
-func NewProblem(problemType Type, title Title, detail Details, instance string) *Problem {
+func NewProblem(problemType, title, detail, instance string, statusCode int) *Problem {
 	return &Problem{
-		Type:     problemType.String(),
-		Title:    title.String(),
-		Detail:   detail.String(),
-		Instance: instance,
-	}
-}
-
-func NewProblemError(problemType Type, title Title, detail Details, instance string, err string) *Problem {
-	return &Problem{
-		Type:     problemType.String(),
-		Title:    title.String(),
-		Detail:   detail.String(),
-		Instance: instance,
-		Err:      err,
+		Type:       problemType,
+		Title:      title,
+		Detail:     detail,
+		Instance:   instance,
+		StatusCode: statusCode,
 	}
 }
 

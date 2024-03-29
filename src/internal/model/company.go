@@ -1,7 +1,6 @@
 package model
 
 import (
-	"errors"
 	"go-access-control/src/internal/helper"
 
 	"time"
@@ -32,10 +31,10 @@ func (c *Company) Validate() error {
 	err := validator.New().Struct(c)
 	if err != nil {
 		if helper.IsValidationProblem(err) {
-			return errors.Join(helper.ErrValidation, err)
+			return helper.NewHelper(helper.ErrValidationStruct).AddIntenal(err)
 		}
 
-		return helper.ErrInternal
+		return helper.NewHelper(helper.ErrInternalValidationStruct).AddIntenal(err)
 	}
 
 	return nil

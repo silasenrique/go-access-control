@@ -3,17 +3,7 @@ package helper
 type ProblemType int
 
 const (
-	Internal ProblemType = iota
-	Business
-	Validation
+	Internal   string = "validation"
+	Business   string = "internal"
+	Validation string = "business"
 )
-
-var problems = map[ProblemType]string{
-	Validation: "validation",
-	Internal:   "internal",
-	Business:   "business",
-}
-
-func (d ProblemType) String() string {
-	return problems[d]
-}
