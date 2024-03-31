@@ -25,3 +25,19 @@
 **Detalhe:** Não foi possível realizar a validação dos dados a serem cadastrados<br>
 **Explicação:** Houve um erro não previsto quando realizada a tentativa de validar os dados da estrutura<br>
 **Como resolver:** Será necessário criar uma issue para o time técnico realizar uma análise. No momento da criação da issue, recomendamos explicar detalhadamente o que foi realizado e enviar o conteúdo enviado na requisição, para facilitar o entendimento para os técnicos.
+
+### O `id` não pode ser nulo
+**Detalhe:** Não foi informado o id para realizar a busca do recurso<br>
+**Explicação:** Foi realizado a tentativa de busca, mas não foi informado o identificador unico do recurso a ser buscado<br>
+**Como resolver:** Informar o identificador único `id` do recurso a ser buscado
+
+### O `code` não pode ser nulo
+**Detalhe:** Não foi informado o `code` para realizar a busca do recurso<br>
+**Explicação:** Foi realizado a tentativa de busca, mas não foi informado o identificador unico do recurso a ser buscado<br>
+**Como resolver:** Para os endpoints `GET` que possuem a nomenclatura `get-by-code`, é necessário informar o segundo identificadr único do recurso que é o atributo `code` para realizar a busca do dado.
+
+### Erro de conversão de string para inteiro
+**Detalhe:** Não foi possível realizar a conversão de `texto` para `numero`<br>
+**Explicação:** Foi realizado a tentiva de converter um `texto` para um `numero`, mas o programa não conseguiu realizar a conversão com sucesso<br>
+**Como resolver:** Será necessário criar uma issue para o time técnico realizar uma análise. No momento da criação da issue, recomendamos explicar detalhadamente o que foi realizado e enviar o conteúdo enviado na requisição, para facilitar o entendimento para os técnicos.
+

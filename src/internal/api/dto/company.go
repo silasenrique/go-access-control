@@ -14,3 +14,8 @@ type CompanyResponse struct {
 	CreationDate   string `json:"creationDate"`
 	LastChangeDate string `json:"lastChangeDate"`
 }
+
+type CompanyGetRequest struct {
+	Code string
+	Name string
+}

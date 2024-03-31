@@ -12,7 +12,7 @@ func getError(err error) *problem.Problem {
 		return problem.NewProblem(
 			Internal,
 			ErrInternal.Error(),
-			ValidationInternalProblemDetail,
+			InternalErrorDetail,
 			urlHelpers[ErrInternal],
 			http.StatusInternalServerError).AddError(err)
 	}
@@ -33,7 +33,7 @@ func getError(err error) *problem.Problem {
 		return problem.NewProblem(
 			Internal,
 			helper.sentinel.Error(),
-			ValidationInternalProblemDetail,
+			SQLNotFoundProblemDetail,
 			urlHelpers[ErrSQLNotFound],
 			http.StatusInternalServerError).
 			AddError(helper.internal).
@@ -42,21 +42,44 @@ func getError(err error) *problem.Problem {
 		return problem.NewProblem(
 			Internal,
 			helper.sentinel.Error(),
-			ValidationInternalProblemDetail,
+			SQLCreateProblemDetail,
 			urlHelpers[ErrSQLCreateFailure],
 			http.StatusInternalServerError).AddError(helper.internal).SetStatusCode(http.StatusBadRequest)
 	case errors.Is(helper.sentinel, ErrCodeAlreadyExists):
 		return problem.NewProblem(
 			Business,
 			helper.sentinel.Error(),
-			ValidationInternalProblemDetail,
+			CodeExistsDetails,
 			urlHelpers[ErrCodeAlreadyExists],
 			http.StatusBadRequest).SetStatusCode(http.StatusBadRequest)
+	case errors.Is(helper.sentinel, ErrTheIdCannotBeEmpty):
+		return problem.NewProblem(
+			Internal,
+			helper.sentinel.Error(),
+			TheIdCannotBeEmpty,
+			urlHelpers[ErrTheIdCannotBeEmpty],
+			http.StatusInternalServerError).SetStatusCode(http.StatusBadRequest)
+	case errors.Is(helper.sentinel, ErrTheCodeCannotBeEmpty):
+		return problem.NewProblem(
+			Internal,
+			helper.sentinel.Error(),
+			TheCodeCannotBeEmpty,
+			urlHelpers[ErrTheCodeCannotBeEmpty],
+			http.StatusInternalServerError).SetStatusCode(http.StatusBadRequest)
+	case errors.Is(helper.sentinel, ErrStringToIntegerConversion):
+		return problem.NewProblem(
+			Internal,
+			helper.sentinel.Error(),
+			StringToIntegerConversion,
+			urlHelpers[ErrStringToIntegerConversion],
+			http.StatusInternalServerError).
+			AddError(helper.internal).
+			SetStatusCode(http.StatusBadRequest)
 	default:
 		return problem.NewProblem(
 			Internal,
 			ErrInternal.Error(),
-			ValidationInternalProblemDetail,
+			InternalErrorDetail,
 			urlHelpers[ErrInternal],
 			http.StatusInternalServerError).
 			AddError(helper.internal).

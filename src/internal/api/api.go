@@ -21,6 +21,8 @@ func NewServer(port string, dbConnection string) *api {
 
 func (a *api) LoadRoutes() *api {
 	a.api.Post("/company/create", handler.CompanyCreateHandler(a.db))
+	a.api.Get("/company/get-by-code/{code}", handler.CompatyGetByCodeHandler(a.db))
+	a.api.Get("/company/get-by-id/{id}", handler.CompatyGetIdHandler(a.db))
 
 	return a
 }
