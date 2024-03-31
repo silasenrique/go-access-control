@@ -19,4 +19,13 @@ var (
 
 	// não foi possível criar o recurso
 	ErrSQLCreateFailure = errors.New("não foi possível criar o recurso")
+
+	// o id não pode ser nulo
+	ErrTheIdCannotBeEmpty = errors.New("o id não pode ser nulo")
+
+	// o id não pode ser nulo
+	ErrTheCodeCannotBeEmpty = errors.New("o code não pode ser nulo")
+
+	// erro de conversão de string para inteiro
+	ErrStringToIntegerConversion = errors.New("erro de conversão de string para inteiro")
 )

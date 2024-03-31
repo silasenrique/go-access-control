@@ -2,10 +2,12 @@ package services
 
 import (
 	"database/sql"
+	"errors"
 	"go-access-control/src/internal/api/dto"
 	"go-access-control/src/internal/helper"
 	"go-access-control/src/internal/model"
 	"go-access-control/src/internal/repository"
+	"strconv"
 	"time"
 )
 
@@ -55,4 +57,59 @@ func (c *CompanyService) Create(req *dto.CompanyCreateRequest) (*dto.CompanyResp
 		LastChangeDate: time.Unix(findByCode.LastChangeDate, 0).String(),
 	}, nil
 
+}
+
+func (c *CompanyService) GetById(id string) (*dto.CompanyResponse, error) {
+	if id == "" {
+		return nil, helper.NewHelper(helper.ErrTheIdCannotBeEmpty)
+	}
+
+	parseId, err := strconv.Atoi(id)
+	if err != nil {
+		return nil, helper.
+			NewHelper(helper.ErrStringToIntegerConversion).
+			AddIntenal(err)
+	}
+
+	company, err := c.rep.FindById(parseId)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+
+		return nil, err
+	}
+
+	return &dto.CompanyResponse{
+		Id:             company.Id,
+		Code:           company.Code,
+		Name:           company.Name,
+		SiteUrl:        company.SiteUrl,
+		CreationDate:   time.Unix(company.CreationDate, 0).String(),
+		LastChangeDate: time.Unix(company.LastChangeDate, 0).String(),
+	}, nil
+}
+
+func (c *CompanyService) GetByCode(code string) (*dto.CompanyResponse, error) {
+	if code == "" {
+		return nil, helper.NewHelper(helper.ErrTheCodeCannotBeEmpty)
+	}
+
+	company, err := c.rep.FindByCode(code)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+
+		return nil, err
+	}
+
+	return &dto.CompanyResponse{
+		Id:             company.Id,
+		Code:           company.Code,
+		Name:           company.Name,
+		SiteUrl:        company.SiteUrl,
+		CreationDate:   time.Unix(company.CreationDate, 0).String(),
+		LastChangeDate: time.Unix(company.LastChangeDate, 0).String(),
+	}, nil
 }

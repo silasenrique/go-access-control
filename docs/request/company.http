@@ -8,3 +8,9 @@ Accept: application/json
   "name": "Cruzeiro do Sul",
   "siteUrl": "https://www.youtube.com/live/MspA7YUeDnw?si=MGdYvLr08vpXk8PS"
 }
+
+GET {{host}}/company/get-by-code/sd33aas1l HTTP/1.1
+Accept: application/json
+
+GET {{host}}/company/get-by-id/10 HTTP/1.1
+Accept: application/json
