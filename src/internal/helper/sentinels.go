@@ -28,4 +28,16 @@ var (
 
 	// erro de conversão de string para inteiro
 	ErrStringToIntegerConversion = errors.New("erro de conversão de string para inteiro")
+
+	// erro de conversão de string para inteiro
+	ErrPasswordNotStrong = errors.New("a senha não é forte o suficiente")
+
+	// erro de conversão de string para inteiro
+	ErrPasswordWrongSize = errors.New("a senha não tem o tamanho minimo")
+
+	// a empresa não existe
+	ErrCompanyNotExists = errors.New("a empresa não existe")
+
+	// o email já foi cadastrado anteriormente
+	ErrUserEmailExists = errors.New("o email já foi cadastrado anteriormente")
 )

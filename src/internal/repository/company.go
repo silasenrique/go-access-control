@@ -30,7 +30,7 @@ func (c *CompanyRepository) FindByCode(code string) (*model.Company, error) {
 	)
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, nil
+			return nil, err
 		}
 
 		return nil, helper.NewHelper(helper.ErrSQLNotFound).AddIntenal(err)
