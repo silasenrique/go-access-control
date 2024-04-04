@@ -22,6 +22,7 @@ func CreateUserHandler(db *sql.DB) http.HandlerFunc {
 		newUser, err := services.NewUserService(db).CreateUser(user)
 		if err != nil {
 			helper.ProblemHttpResponse(w, err)
+			return
 		}
 
 		w.Header().Add("Content-Type", "application/json")

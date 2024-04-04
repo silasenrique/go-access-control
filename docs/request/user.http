@@ -1,7 +1,7 @@
 @host = http://localhost:9959
 
 POST {{host}}/user/create HTTP/1.1
-Accept: application/json
+Accept: application/json, application/problem+json
 
 {
   "companyCode": "aaaaaaal",
