@@ -15,7 +15,11 @@ type Password struct {
 }
 
 func NewPassword(password string, reset bool, expiration int64) *Password {
-	return &Password{Password: password, Reset: reset, Expiration: expiration}
+	return &Password{
+		Password:   password,
+		Reset:      reset,
+		Expiration: expiration,
+	}
 }
 
 func (p *Password) IsStronger() error {

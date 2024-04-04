@@ -10,9 +10,9 @@ import (
 type User struct {
 	Id             int
 	CompanyCode    string `validate:"required,gte=3,lte=10"`
-	Email          string `validate:"reqired,email,lte=200"`
+	Email          string `validate:"required,email"`
 	Password       *Password
-	CompleteName   string `validate:"reqired,gte=3,lte=200"`
+	CompleteName   string `validate:"required,gte=3,lte=200"`
 	CreationDate   int64
 	LastChangeDate int64
 }

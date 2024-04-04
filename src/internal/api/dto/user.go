@@ -1,13 +1,15 @@
 package dto
 
-import "go-access-control/src/internal/model"
+import (
+	"go-access-control/src/internal/model"
+)
 
 type UserCreateRequest struct {
 	CompanyCode      string `json:"companyCode,omitempty"`
 	Email            string `json:"email,omitempty"`
 	Password         string `json:"password,omitempty"`
 	ResetFirstAccess bool   `json:"resetFirstAccess,omitempty"`
-	Expiration       int64  `json:"expiration,omitempty"`
+	Expiration       string `json:"expiration,omitempty"`
 	CompleteName     string `json:"completeName,omitempty"`
 }
 
@@ -16,7 +18,6 @@ type UserCreateResponse struct {
 	CompanyCode     string `json:"companyCode"`
 	Email           string `json:"email"`
 	CompleteName    string `json:"completeName"`
-	Password        string `json:"password"`
 	Reset           bool   `json:"resetPassword"`
 	Expiration      int64  `json:"expirationDate"`
 	LatestResetDate int64  `json:"latestResetDate"`
@@ -30,7 +31,6 @@ func NewUserCreateResponse(user *model.User) *UserCreateResponse {
 		CompanyCode:     user.CompanyCode,
 		Email:           user.Email,
 		CompleteName:    user.CompleteName,
-		Password:        user.Password.Password,
 		Reset:           user.Password.Reset,
 		Expiration:      user.Password.Expiration,
 		LatestResetDate: user.Password.LatestResetDate,

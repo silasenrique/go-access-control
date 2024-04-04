@@ -7,6 +7,7 @@ import (
 	"go-access-control/src/internal/helper"
 	"go-access-control/src/internal/model"
 	"go-access-control/src/internal/repository"
+	"time"
 )
 
 type UserService struct {
@@ -46,10 +47,15 @@ func (u *UserService) CreateUser(userRequest *dto.UserCreateRequest) (*dto.UserC
 		return nil, helper.NewHelper(helper.ErrUserEmailExists)
 	}
 
+	dtExpiration, err := time.Parse(userRequest.Expiration, time.DateOnly)
+	if err != nil {
+		return nil, err
+	}
+
 	pass := model.NewPassword(
 		userRequest.Password,
 		userRequest.ResetFirstAccess,
-		userRequest.Expiration,
+		dtExpiration.Unix(),
 	)
 
 	err = pass.IsStronger()

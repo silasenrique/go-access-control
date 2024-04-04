@@ -1,0 +1,13 @@
+@host = http://localhost:9959
+
+POST {{host}}/user/create HTTP/1.1
+Accept: application/json
+
+{
+  "companyCode": "aaaaaaal",
+  "email": "test@gmail.com",
+  "password": "ass@@@ASA123",
+  "resetFirstAccess": true,
+  "expiration": "23-01-2024",
+  "completeName": "Eugenio da Silva Fagundes"
+}
