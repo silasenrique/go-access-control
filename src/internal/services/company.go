@@ -31,7 +31,9 @@ func (c *CompanyService) Create(req *dto.CompanyCreateRequest) (*dto.CompanyResp
 
 	findByCode, err := c.rep.FindByCode(company.Code)
 	if err != nil {
-		return nil, err
+		if !errors.Is(err, sql.ErrNoRows) {
+			return nil, err
+		}
 	}
 
 	if findByCode != nil {

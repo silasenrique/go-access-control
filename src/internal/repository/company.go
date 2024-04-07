@@ -28,9 +28,10 @@ func (c *CompanyRepository) FindByCode(code string) (*model.Company, error) {
 		&company.CreationDate,
 		&company.LastChangeDate,
 	)
+
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			return nil, nil
+			return nil, err
 		}
 
 		return nil, helper.NewHelper(helper.ErrSQLNotFound).AddIntenal(err)
@@ -52,6 +53,7 @@ func (c *CompanyRepository) FindById(id int) (*model.Company, error) {
 		&company.CreationDate,
 		&company.LastChangeDate,
 	)
+
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			return nil, err
