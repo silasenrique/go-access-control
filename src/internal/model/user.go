@@ -17,9 +17,10 @@ type User struct {
 	LastChangeDate int64
 }
 
-func NewUser(companyCode, email string) *User {
+func NewUser(companyCode, completeName, email string) *User {
 	return &User{
 		CompanyCode:    companyCode,
+		CompleteName:   completeName,
 		Email:          email,
 		CreationDate:   time.Now().Unix(),
 		LastChangeDate: time.Now().Unix(),

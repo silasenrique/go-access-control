@@ -39,7 +39,9 @@ func (u *UserRepository) Create(user *model.User) error {
 
 func (u *UserRepository) FindByEmail(email string) (*model.User, error) {
 	query := `select * from "user" where email = $1`
-	user := &model.User{}
+	user := &model.User{
+		Password: &model.Password{},
+	}
 
 	err := u.db.QueryRow(query, email).
 		Scan(

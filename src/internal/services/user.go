@@ -23,7 +23,12 @@ func NewUserService(db *sql.DB) *UserService {
 }
 
 func (u *UserService) CreateUser(userRequest *dto.UserCreateRequest) (*dto.UserCreateResponse, error) {
-	user := model.NewUser(userRequest.CompanyCode, userRequest.Email)
+	user := model.NewUser(
+		userRequest.CompanyCode,
+		userRequest.CompleteName,
+		userRequest.Email,
+	)
+
 	err := user.Validate()
 	if err != nil {
 		return nil, err
@@ -40,14 +45,16 @@ func (u *UserService) CreateUser(userRequest *dto.UserCreateRequest) (*dto.UserC
 
 	userExist, err := u.userRep.FindByEmail(user.Email)
 	if err != nil {
-		return nil, err
+		if !errors.Is(err, sql.ErrNoRows) {
+			return nil, helper.NewHelper(helper.ErrCompanyNotExists).AddIntenal(err)
+		}
 	}
 
 	if userExist != nil {
 		return nil, helper.NewHelper(helper.ErrUserEmailExists)
 	}
 
-	dtExpiration, err := time.Parse(userRequest.Expiration, time.DateOnly)
+	dtExpiration, err := time.Parse("02-01-2006", userRequest.Expiration)
 	if err != nil {
 		return nil, err
 	}

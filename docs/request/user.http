@@ -5,8 +5,8 @@ Accept: application/json, application/problem+json
 
 {
   "companyCode": "aaaaaaal",
-  "email": "test@gmail.com",
-  "password": "ass@@@ASA123",
+  "email": "testaa@gmail.com",
+  "password": "123@#$ASBacaasasa!@!#3as.",
   "resetFirstAccess": true,
   "expiration": "23-01-2024",
   "completeName": "Eugenio da Silva Fagundes"

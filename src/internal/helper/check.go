@@ -75,6 +75,13 @@ func getError(err error) *problem.Problem {
 			http.StatusInternalServerError).
 			AddError(helper.internal).
 			SetStatusCode(http.StatusBadRequest)
+	case errors.Is(helper.sentinel, ErrPasswordNotStrong):
+		return problem.NewProblem(
+			Internal,
+			helper.sentinel.Error(),
+			PasswordNotStrong,
+			urlHelpers[ErrPasswordNotStrong],
+			http.StatusInternalServerError).SetStatusCode(http.StatusBadRequest)
 	default:
 		return problem.NewProblem(
 			Internal,

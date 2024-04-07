@@ -10,4 +10,5 @@ const (
 	TheIdCannotBeEmpty              string = "Não foi informado o id para realizar a busca do recurso"
 	TheCodeCannotBeEmpty            string = "Não foi informado o `code` para realizar a busca do recurso"
 	StringToIntegerConversion       string = "Não foi possível realizar a conversão de `texto` para `numero`"
+	PasswordNotStrong               string = "A senha não atende os requisitos minimos"
 )

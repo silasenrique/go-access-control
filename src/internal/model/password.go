@@ -2,8 +2,8 @@ package model
 
 import (
 	"go-access-control/src/internal/helper"
-	"regexp"
 
+	regexp "github.com/dlclark/regexp2"
 	"golang.org/x/crypto/bcrypt"
 )
 
@@ -23,14 +23,17 @@ func NewPassword(password string, reset bool, expiration int64) *Password {
 }
 
 func (p *Password) IsStronger() error {
-	if len(p.Password) < 12 {
-		return helper.ErrPasswordWrongSize
+	validate, err := regexp.Compile(`^(?=.*[0-9]{3})(?=.*[a-z]{3})(?=.*[A-Z]{3})(?=.*[@#$%^&+=!]{3}).{12,}$`, 0)
+	if err != nil {
+		return helper.NewHelper(helper.ErrPasswordRegexpCheck).AddIntenal(err)
 	}
 
-	validate := regexp.MustCompilePOSIX("^(?=.*[0-9]{3})(?=.*[a-z]{3})(?=.*[A-Z]{3})(?=.*[@#$%^&+=]){3}.{12,}$")
+	result, err := validate.MatchString(p.Password)
+	if err != nil {
+		return helper.NewHelper(helper.ErrPasswordRegexpCheck).AddIntenal(err)
+	}
 
-	strong := validate.MatchString(p.Password)
-	if !strong {
+	if !result {
 		return helper.NewHelper(helper.ErrPasswordNotStrong)
 	}
 
