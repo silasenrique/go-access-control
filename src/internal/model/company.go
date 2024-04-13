@@ -5,14 +5,15 @@ import (
 
 	"time"
 
-	"github.com/go-playground/validator/v10"
+	validator "github.com/go-ozzo/ozzo-validation"
+	"github.com/go-ozzo/ozzo-validation/is"
 )
 
 type Company struct {
 	Id             int
-	Code           string `validate:"required,gte=3,lte=10"`
-	Name           string `validate:"required,gte=10,lte=100"`
-	SiteUrl        string `validate:"lte=200"`
+	Code           string
+	Name           string
+	SiteUrl        string
 	CreationDate   int64
 	LastChangeDate int64
 }
@@ -28,13 +29,14 @@ func NewCompany(code, name, url string) *Company {
 }
 
 func (c *Company) Validate() error {
-	err := validator.New().Struct(c)
-	if err != nil {
-		if helper.IsValidationProblem(err) {
-			return helper.NewHelper(helper.ErrValidationStruct).AddIntenal(err)
-		}
+	err := validator.ValidateStruct(c,
+		validator.Field(&c.Code, validator.Required, validator.Length(3, 10)),
+		validator.Field(&c.Name, validator.Required, validator.Length(10, 100)),
+		validator.Field(&c.SiteUrl, is.URL, validator.Length(0, 200)),
+	)
 
-		return helper.NewHelper(helper.ErrInternalValidationStruct).AddIntenal(err)
+	if err != nil {
+		return helper.OzzoValidationError(err)
 	}
 
 	return nil

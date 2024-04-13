@@ -8,10 +8,10 @@ import (
 
 func OzzoValidationError(err error) error {
 	if e, ok := err.(validator.InternalError); ok {
-		return problem.NewProblem(problem.Internal, "a validação falhou").AddError(e)
+		return problem.NewProblem(problem.Internal, "não foi possível validar os dados enviados").AddError(e)
 	}
 
-	return problem.NewProblem(problem.Validation, "a validação falhou").
-		AddError(err).
-		AddDetail("as informações inseridas na estrutura não estão corretas")
+	return problem.NewProblem(problem.Validation, "os dados enviados estão incorretos").
+		AddDetail("Os dados informados não seguem as regras especificadas para os atributos").
+		AddValidationError(err)
 }
