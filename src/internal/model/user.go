@@ -4,15 +4,16 @@ import (
 	"go-access-control/src/internal/helper"
 	"time"
 
-	"github.com/go-playground/validator/v10"
+	validator "github.com/go-ozzo/ozzo-validation"
+	"github.com/go-ozzo/ozzo-validation/is"
 )
 
 type User struct {
 	Id             int
-	CompanyCode    string `validate:"required,gte=3,lte=10"`
-	Email          string `validate:"required,email"`
+	CompanyCode    string
+	Email          string
 	Password       *Password
-	CompleteName   string `validate:"required,gte=3,lte=200"`
+	CompleteName   string
 	CreationDate   int64
 	LastChangeDate int64
 }
@@ -32,13 +33,14 @@ func (u *User) AddPassword(pass *Password) {
 }
 
 func (u *User) Validate() error {
-	err := validator.New().Struct(u)
-	if err != nil {
-		if helper.IsValidationProblem(err) {
-			return helper.NewHelper(helper.ErrValidationStruct).AddIntenal(err)
-		}
+	err := validator.ValidateStruct(u,
+		validator.Field(&u.CompanyCode, validator.Required, validator.Length(3, 10)),
+		validator.Field(&u.Email, validator.Required, is.Email),
+		validator.Field(&u.CompleteName, validator.Required, validator.Length(2, 100)),
+	)
 
-		return helper.NewHelper(helper.ErrInternalValidationStruct).AddIntenal(err)
+	if err != nil {
+		return helper.OzzoValidationError(err)
 	}
 
 	return nil
